@@ -1,0 +1,290 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #fff;
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: #fff;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.8;
+            }
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            background: #1c1c1c;
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .header h1 {
+            color: #1c1c1c;
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            color: #464646;
+            font-size: 18px;
+            margin-top: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .intro {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border-left: 5px solid #667eea;
+        }
+
+        .intro p {
+            color: #2d3748;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .terms-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .terms-list li {
+            background: #ffffff;
+            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 16px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 70px;
+        }
+
+        .terms-list li:hover {
+            transform: translateX(10px);
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+        }
+
+        .terms-list li::before {
+            content: attr(data-number);
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .terms-list li span {
+            color: #2d3748;
+            font-size: 16px;
+            display: block;
+        }
+
+        .important {
+            background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%) !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        .important span {
+            color: white !important;
+            font-weight: 600;
+        }
+
+        .important::before {
+            background: rgba(255, 255, 255, 0.3) !important;
+            content: '⚠️' !important;
+            font-size: 20px;
+        }
+
+        .footer {
+            background: #f7fafc;
+            padding: 30px 40px;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .footer p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .footer strong {
+            color: #2d3748;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .terms-list li {
+                padding: 20px;
+                padding-left: 60px;
+            }
+
+            .terms-list li::before {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                </div>
+            </div>
+            <h1>Thekkan</h1>
+            <h1>Terms & Conditions</h1>
+            <p>Please read these terms carefully before using our platform</p>
+        </div>
+
+        <div class="content">
+            <div class="intro">
+                <p>🤝 By continuing to use this app, you agree to the following terms and conditions:</p>
+            </div>
+
+            <ul class="terms-list">
+                <li data-number="1">
+                    <span>Repeated or verified complaints may lead to account suspension or permanent ban.</span>
+                </li>
+                <li data-number="2">
+                    <span>Maintain respectful and professional behavior with all customers at all times.</span>
+                </li>
+                <li data-number="3">
+                    <span>Update product stock regularly to ensure accuracy and availability.</span>
+                </li>
+                <li data-number="4">
+                    <span>Inactive accounts may be cancelled after a period of prolonged inactivity.</span>
+                </li>
+                <li data-number="5">
+                    <span>Sellers must ensure product quality and handle customer complaints promptly.</span>
+                </li>
+                <li data-number="6">
+                    <span>Damaged or defective items must be replaced or refunded according to policy.</span>
+                </li>
+                <li data-number="7" class="important">
+                    <span>Any scam, fraud, or illegal activity will result in immediate legal action.</span>
+                </li>
+                <li data-number="8" class="important">
+                    <span>Selling illegal, restricted, or counterfeit items is strictly prohibited.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p><strong>Last Updated:</strong> October 2025</p>
+            <p>By using this platform, you acknowledge that you have read and understood these terms.</p>
+        </div>
+    </div>
+</body>
+</html>
