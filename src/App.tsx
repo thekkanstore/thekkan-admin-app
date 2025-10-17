@@ -7,7 +7,7 @@ import { Sidebar } from './components/Sidebar';
 import { UsersPage } from './pages/Userspage';
 import { CategoriesPage } from './pages/CategoriesPage';
 import { StoreDetailsPage } from './pages/StoreDetailsPage';
-import { Store } from './interfaces';
+import type { Store } from './interfaces';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

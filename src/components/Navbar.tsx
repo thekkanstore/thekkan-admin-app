@@ -1,4 +1,4 @@
-import { Search, Bell, Settings, LogOut, Menu, X } from 'lucide-react';
+import { LogOut, Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   isSidebarOpen: boolean;

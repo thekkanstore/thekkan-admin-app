@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { collection, onSnapshot, doc, updateDoc, query, where } from 'firebase/firestore';
 import { database } from '../firebase';
-import { Loader2, Package, DollarSign, Tag, Box, Search } from 'lucide-react';
-import { Store, Product } from '../interfaces';
+import { Loader2, Package, DollarSign, Box, Search } from 'lucide-react';
+import type { Store, Product } from '../interfaces';
 
 interface StoreDetailsPageProps {
   store: Store | null;

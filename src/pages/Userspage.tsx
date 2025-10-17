@@ -1,31 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Loader2, Ban, CheckCircle, Eye, Copy, Search } from 'lucide-react';
+import { Loader2, Eye, Copy, Search } from 'lucide-react';
 import {
   collection,
-  updateDoc,
-  doc,
   onSnapshot,
-  query,
-  where
 } from 'firebase/firestore';
 import { database } from '../firebase';
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: string | string[];
-  status: string;
-  phoneNumber?: string;
-}
-
-interface Store {
-  id: string;
-  userId: string;
-  name: string;
-  address?: string;
-  [key: string]: any;
-}
+import type { User, Store } from '../interfaces';
 
 interface UsersPageProps {
   onViewStore: (store: Store) => void;
@@ -35,7 +16,7 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
   const [users, setUsers] = useState<User[]>([]);
   const [stores, setStores] = useState<Store[]>([]);
   const [loading, setLoading] = useState(true);
-  const [actionLoading, setActionLoading] = useState<string | null>(null);
+  
   const [tooltipVisible, setTooltipVisible] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -106,30 +87,7 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
     }
   };
 
-  // Toggle user status (Active/Inactive)
-  const handleToggleStatus = async (userId: string, currentStatus: string) => {
-    const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
-
-    if (!confirm(`Are you sure you want to ${newStatus === 'Inactive' ? 'disable' : 'enable'} this user?`)) {
-      return;
-    }
-
-    setActionLoading(userId);
-
-    try {
-      const userRef = doc(database, 'users', userId);
-      await updateDoc(userRef, {
-        status: newStatus
-      });
-
-      alert(`User ${newStatus === 'Inactive' ? 'disabled' : 'enabled'} successfully!`);
-    } catch (error) {
-      console.error('Error updating user status:', error);
-      alert('Failed to update user status');
-    } finally {
-      setActionLoading(null);
-    }
-  };
+  
 
   if (loading) {
     return (
