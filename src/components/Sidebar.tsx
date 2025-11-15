@@ -1,4 +1,4 @@
-import { Home, FolderOpen } from 'lucide-react';
+import { Home, FolderOpen, LayoutDashboard } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -9,6 +9,7 @@ interface SidebarProps {
 
 export const Sidebar = ({ isOpen, currentPage, onPageChange, onClose }: SidebarProps) => {
   const menuItems = [
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'users', label: 'Users', icon: Home },
     { id: 'categories', label: 'Categories', icon: FolderOpen },
   ];

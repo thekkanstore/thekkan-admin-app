@@ -7,12 +7,13 @@ import { Sidebar } from './components/Sidebar';
 import { UsersPage } from './pages/Userspage';
 import { CategoriesPage } from './pages/CategoriesPage';
 import { StoreDetailsPage } from './pages/StoreDetailsPage';
+import { DashboardPage } from './pages/DashboardPage';
 import type { Store } from './interfaces';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState('users');
+  const [currentPage, setCurrentPage] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedStore, setSelectedStore] = useState<Store | null>(null);
 
@@ -50,6 +51,8 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'dashboard':
+        return <DashboardPage />;
       case 'users':
         return <UsersPage onViewStore={handleViewStore} />;
       case 'categories':
@@ -57,7 +60,7 @@ function App() {
       case 'store-details':
         return <StoreDetailsPage store={selectedStore} />;
       default:
-        return <UsersPage onViewStore={handleViewStore} />;
+        return <DashboardPage />;
     }
   };
 

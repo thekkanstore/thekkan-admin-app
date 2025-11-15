@@ -40,4 +40,5 @@ export interface User {
   storeId?: string;
   store?: Store;
   phoneNumber?: string;
+  createdAt: Date;
 }

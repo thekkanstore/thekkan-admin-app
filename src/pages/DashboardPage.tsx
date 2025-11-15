@@ -1,12 +1,81 @@
-import { Users, Home, FolderOpen, LayoutDashboard } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Users, Home, FolderOpen, Package } from 'lucide-react';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { database } from '../firebase';
 
 export const DashboardPage = () => {
+  const [counts, setCounts] = useState({
+    users: 0,
+    stores: 0,
+    categories: 0,
+    products: 0
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Subscribe to users collection
+    const unsubscribeUsers = onSnapshot(
+      collection(database, 'users'),
+      (snapshot) => {
+        setCounts(prev => ({ ...prev, users: snapshot.size }));
+      },
+      (error) => console.error('Error fetching users count:', error)
+    );
+
+    // Subscribe to stores collection
+    const unsubscribeStores = onSnapshot(
+      collection(database, 'stores'),
+      (snapshot) => {
+        setCounts(prev => ({ ...prev, stores: snapshot.size }));
+      },
+      (error) => console.error('Error fetching stores count:', error)
+    );
+
+    // Subscribe to categories collection
+    const unsubscribeCategories = onSnapshot(
+      collection(database, 'categories'),
+      (snapshot) => {
+        setCounts(prev => ({ ...prev, categories: snapshot.size }));
+      },
+      (error) => console.error('Error fetching categories count:', error)
+    );
+
+    // Subscribe to products collection
+    const unsubscribeProducts = onSnapshot(
+      collection(database, 'products'),
+      (snapshot) => {
+        setCounts(prev => ({ ...prev, products: snapshot.size }));
+        setLoading(false);
+      },
+      (error) => {
+        console.error('Error fetching products count:', error);
+        setLoading(false);
+      }
+    );
+
+    // Cleanup subscriptions on unmount
+    return () => {
+      unsubscribeUsers();
+      unsubscribeStores();
+      unsubscribeCategories();
+      unsubscribeProducts();
+    };
+  }, []);
+
   const stats = [
-    { label: 'Total Users', value: '2,543', change: '+12%', icon: Users },
-    { label: 'Active Sessions', value: '1,234', change: '+8%', icon: Home },
-    { label: 'Categories', value: '42', change: '+3%', icon: FolderOpen },
-    { label: 'Revenue', value: '$12,345', change: '+15%', icon: LayoutDashboard },
+    { label: 'Total Users', value: counts.users.toString(), icon: Users, color: 'text-blue-400' },
+    { label: 'Total Stores', value: counts.stores.toString(), icon: Home, color: 'text-green-400' },
+    { label: 'Categories', value: counts.categories.toString(), icon: FolderOpen, color: 'text-purple-400' },
+    { label: 'Products', value: counts.products.toString(), icon: Package, color: 'text-orange-400' },
   ];
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -14,18 +83,17 @@ export const DashboardPage = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
-          <div key={index} className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+          <div key={index} className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 hover:border-zinc-700 transition-colors">
             <div className="flex items-center justify-between mb-4">
-              <stat.icon className="w-8 h-8 text-zinc-400" />
-              <span className="text-green-400 text-sm font-medium">{stat.change}</span>
+              <stat.icon className={`w-8 h-8 ${stat.color}`} />
             </div>
             <p className="text-zinc-400 text-sm mb-1">{stat.label}</p>
-            <p className="text-2xl font-bold text-white">{stat.value}</p>
+            <p className="text-3xl font-bold text-white">{stat.value}</p>
           </div>
         ))}
       </div>
 
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+      {/* <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
         <h2 className="text-xl font-semibold text-white mb-4">Recent Activity</h2>
         <div className="space-y-4">
           {[1, 2, 3, 4].map((i) => (
@@ -38,7 +106,7 @@ export const DashboardPage = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

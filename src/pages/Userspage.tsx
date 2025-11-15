@@ -3,8 +3,11 @@ import { Loader2, Eye, Copy, Search } from 'lucide-react';
 import {
   collection,
   onSnapshot,
+  Timestamp
 } from 'firebase/firestore';
 import { database } from '../firebase';
+import { format } from 'date-fns';
+
 
 import type { User, Store } from '../interfaces';
 
@@ -29,11 +32,17 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
     const unsubscribe = onSnapshot(usersRef, (snapshot) => {
       const usersArray: User[] = [];
       snapshot.forEach((doc) => {
+        const userData = doc.data();
         usersArray.push({
           id: doc.id,
-          ...doc.data()
+          ...userData,
+          createdAt: userData.createdAt ? (userData.createdAt as Timestamp).toDate() : new Date(),
         } as User);
       });
+      
+      // Sort by createdAt descending (newest first)
+      usersArray.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+      
       setUsers(usersArray);
       setLoading(false);
     }, (error) => {
@@ -71,6 +80,8 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
       user.email.toLowerCase().includes(lowercasedQuery) ||
       (user.phoneNumber && user.phoneNumber.toLowerCase().includes(lowercasedQuery))
     );
+    
+    // Keep the sorted order (newest first) after filtering
     setFilteredUsers(filtered);
   }, [searchQuery, users]);
 
@@ -127,12 +138,13 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
               <th className="text-left px-6 py-4 text-zinc-400 font-medium text-sm">Role</th>
               <th className="text-left px-6 py-4 text-zinc-400 font-medium text-sm">Store</th>
               <th className="text-left px-6 py-4 text-zinc-400 font-medium text-sm">UserId</th>
+              <th className="text-left px-6 py-4 text-zinc-400 font-medium text-sm">Created At</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-6 py-8 text-center text-zinc-500">
+                <td colSpan={8} className="px-6 py-8 text-center text-zinc-500">
                   {searchQuery ? 'No users match your search' : 'No users found'}
                 </td>
               </tr>
@@ -149,7 +161,7 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
                         {user.phoneNumber || 'N/A'}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 flex flex-col gap-4">
                       {Array.isArray(user.role) ? user.role.map((role: string, index: number) => (
                         <span
                           key={index}
@@ -163,7 +175,7 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
                       {userStore ? (
                         <button
                           onClick={() => handleViewStore(user.id)}
-                          className="flex items-center gap-2 px-3 py-1.5 rounded-lg font-medium text-sm transition-colors bg-blue-950/50 text-blue-400 border border-blue-900 hover:bg-blue-900/50"
+                          className="flex items-center gap-1 px-3 py-1.5 rounded-lg font-medium text-sm transition-colors bg-blue-950/50 text-blue-400 border border-blue-900 hover:bg-blue-900/50"
                         >
                           <Eye className="w-4 h-4" />
                           View Store
@@ -188,6 +200,9 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
                           )}
                         </div>
                       </div>
+                    </td>
+                    <td className="px-6 py-4 text-zinc-400">
+                      {format(user.createdAt, "dd-MM-yyyy HH:mm")}
                     </td>
                   </tr>
                 );
