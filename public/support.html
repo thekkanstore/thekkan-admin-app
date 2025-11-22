@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms & Conditions</title>
+    <title>Support</title>
     <style>
         * {
             margin: 0;
@@ -102,10 +102,10 @@
         }
 
         .content {
-            padding: 50px 40px;
+            padding: 50px 20px;
         }
 
-        .intro {
+        .support-info {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             padding: 30px;
             border-radius: 16px;
@@ -113,18 +113,18 @@
             border-left: 5px solid #667eea;
         }
 
-        .intro p {
+        .support-info p {
             color: #2d3748;
             font-size: 18px;
             font-weight: 500;
         }
 
-        .terms-list {
+        .contact-methods {
             list-style: none;
             padding: 0;
         }
 
-        .terms-list li {
+        .contact-methods li {
             background: #ffffff;
             margin-bottom: 20px;
             padding: 25px;
@@ -135,51 +135,36 @@
             padding-left: 70px;
         }
 
-        .terms-list li:hover {
+        .contact-methods li:hover {
             transform: translateX(10px);
             border-color: #667eea;
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
         }
 
-        .terms-list li::before {
-            content: attr(data-number);
+        .contact-methods li::before {
+            content: attr(data-icon);
             position: absolute;
             left: 20px;
             top: 50%;
             transform: translateY(-50%);
             width: 40px;
             height: 40px;
-            background: #fff;
+            background: #667eea;
             color: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 20px;
         }
 
-        .terms-list li span {
+        .contact-methods li a {
             color: #2d3748;
             font-size: 16px;
-            display: block;
-        }
-
-        .important {
-            background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%) !important;
-            color: white !important;
-            border: none !important;
-        }
-
-        .important span {
-            color: white !important;
+            text-decoration: none;
             font-weight: 600;
-        }
-
-        .important::before {
-            background: rgba(255, 255, 255, 0.3) !important;
-            content: '⚠️' !important;
-            font-size: 20px;
+            white-space: break-spaces;
         }
 
         .footer {
@@ -192,40 +177,6 @@
         .footer p {
             color: #718096;
             font-size: 14px;
-        }
-
-        .footer strong {
-            color: #2d3748;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 20px 10px;
-            }
-
-            .header {
-                padding: 40px 20px;
-            }
-
-            .header h1 {
-                font-size: 32px;
-            }
-
-            .content {
-                padding: 30px 20px;
-            }
-
-            .terms-list li {
-                padding: 20px;
-                padding-left: 60px;
-            }
-
-            .terms-list li::before {
-                width: 35px;
-                height: 35px;
-                font-size: 14px;
-                left: 15px;
-            }
         }
     </style>
 </head>
@@ -244,46 +195,33 @@
                 </div>
             </div>
             <h1>Dealzhub</h1>
-            <h1>Terms & Conditions</h1>
-            <p>Please read these terms carefully before using our platform</p>
+            <h1>Support</h1>
+            <p>We're here to help you with any issues or questions.</p>
         </div>
 
         <div class="content">
-            <div class="intro">
-                <p>🤝 By continuing to use this app, you agree to the following terms and conditions:</p>
+            <div class="support-info">
+                <p>For any support queries, please reach out to us through the following channels:</p>
             </div>
 
-            <ul class="terms-list">
-                <li data-number="1">
-                    <span>Repeated or verified complaints may lead to account suspension or permanent ban.</span>
+            <ul class="contact-methods">
+                <li data-icon="📧">
+                    <a href="mailto:Dealzhubstore@gmail.com">Dealzhubstore@gmail.com</a>
                 </li>
-                <li data-number="2">
-                    <span>Maintain respectful and professional behavior with all customers at all times.</span>
+                <li data-icon="📞">
+                    <a href="tel:+919746323074">+91 9746323074</a>
                 </li>
-                <li data-number="3">
-                    <span>Update product stock regularly to ensure accuracy and availability.</span>
+                <li data-icon="📝">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfZGHFCzRgvwPlwmH4KaJ42Crjn0rbiXyg5CQLShVtp8vjCbg/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">Support Form <span style="text-decoration: underline; color: #667eea;">Click here</span></a>
                 </li>
-                <li data-number="4">
-                    <span>Inactive accounts may be cancelled after a period of prolonged inactivity.</span>
-                </li>
-                <li data-number="5">
-                    <span>Sellers must ensure product quality and handle customer complaints promptly.</span>
-                </li>
-                <li data-number="6">
-                    <span>Damaged or defective items must be replaced or refunded according to policy.</span>
-                </li>
-                <li data-number="7" class="important">
-                    <span>Any scam, fraud, or illegal activity will result in immediate legal action.</span>
-                </li>
-                <li data-number="8" class="important">
-                    <span>Selling illegal, restricted, or counterfeit items is strictly prohibited.</span>
+                <li data-icon="📝">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScQ-j-TNumfhV3D8_grcxdKr3SvuL90utDtcp3LGIAGlZ_Xhw/viewform?usp=dialog" target="_blank" rel="noopener noreferrer">Account Deletion Form <span style="text-decoration: underline; color: #667eea;">Click here</span></a>
                 </li>
             </ul>
         </div>
 
         <div class="footer">
-            <p><strong>Last Updated:</strong> October 2025</p>
-            <p>By using this platform, you acknowledge that you have read and understood these terms.</p>
+            <p>Our team will get back to you as soon as possible.</p>
         </div>
     </div>
 </body>
