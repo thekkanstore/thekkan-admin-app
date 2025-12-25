@@ -1,290 +1,200 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms & Conditions</title>
+    <title>Terms and Conditions and Privacy Policy for Dealzhub App</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #fff;
-            min-height: 100vh;
-            padding: 40px 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 40px auto;
+            max-width: 800px;
             line-height: 1.6;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: #ffffff;
-            border-radius: 24px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-
-        .header {
-            background: #fff;
-            padding: 50px 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            animation: pulse 15s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-            50% {
-                transform: scale(1.2);
-                opacity: 0.8;
-            }
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .logo {
-            width: 70px;
-            height: 70px;
-            background: #1c1c1c;
-            border-radius: 16px;
-            padding: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        .header h1 {
-            color: #1c1c1c;
-            font-size: 42px;
-            font-weight: 800;
-            letter-spacing: -1px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .header p {
-            color: #464646;
             font-size: 18px;
-            margin-top: 12px;
-            position: relative;
-            z-index: 1;
+            color: #444;
+            padding: 0 10px;
         }
 
-        .content {
-            padding: 50px 40px;
-        }
-
-        .intro {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 30px;
-            border-radius: 16px;
-            margin-bottom: 40px;
-            border-left: 5px solid #667eea;
-        }
-
-        .intro p {
-            color: #2d3748;
-            font-size: 18px;
-            font-weight: 500;
-        }
-
-        .terms-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .terms-list li {
-            background: #ffffff;
-            margin-bottom: 20px;
-            padding: 25px;
-            border-radius: 16px;
-            border: 2px solid #e2e8f0;
-            transition: all 0.3s ease;
-            position: relative;
-            padding-left: 70px;
-        }
-
-        .terms-list li:hover {
-            transform: translateX(10px);
-            border-color: #667eea;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
-        }
-
-        .terms-list li::before {
-            content: attr(data-number);
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background: #fff;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 16px;
-        }
-
-        .terms-list li span {
-            color: #2d3748;
-            font-size: 16px;
-            display: block;
-        }
-
-        .important {
-            background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%) !important;
-            color: white !important;
-            border: none !important;
-        }
-
-        .important span {
-            color: white !important;
-            font-weight: 600;
-        }
-
-        .important::before {
-            background: rgba(255, 255, 255, 0.3) !important;
-            content: '⚠️' !important;
-            font-size: 20px;
-        }
-
-        .footer {
-            background: #f7fafc;
-            padding: 30px 40px;
-            text-align: center;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .footer p {
-            color: #718096;
-            font-size: 14px;
-        }
-
-        .footer strong {
-            color: #2d3748;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 20px 10px;
-            }
-
-            .header {
-                padding: 40px 20px;
-            }
-
-            .header h1 {
-                font-size: 32px;
-            }
-
-            .content {
-                padding: 30px 20px;
-            }
-
-            .terms-list li {
-                padding: 20px;
-                padding-left: 60px;
-            }
-
-            .terms-list li::before {
-                width: 35px;
-                height: 35px;
-                font-size: 14px;
-                left: 15px;
-            }
+        h3,
+        h4 {
+            line-height: 1.2;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo-container">
-                <div class="logo">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                        <polyline points="10 9 9 9 8 9"></polyline>
-                    </svg>
-                </div>
-            </div>
-            <h1>Dealzhub</h1>
-            <h1>Terms & Conditions</h1>
-            <p>Please read these terms carefully before using our platform</p>
-        </div>
+    <h3>Terms and Conditions and Privacy Policy for Dealzhub App</h3>
 
-        <div class="content">
-            <div class="intro">
-                <p>🤝 By continuing to use this app, you agree to the following terms and conditions:</p>
-            </div>
+    <p><em>Effective Date: December 22, 2025</em></p>
 
-            <ul class="terms-list">
-                <li data-number="1">
-                    <span>Repeated or verified complaints may lead to account suspension or permanent ban.</span>
-                </li>
-                <li data-number="2">
-                    <span>Maintain respectful and professional behavior with all customers at all times.</span>
-                </li>
-                <li data-number="3">
-                    <span>Update product stock regularly to ensure accuracy and availability.</span>
-                </li>
-                <li data-number="4">
-                    <span>Inactive accounts may be cancelled after a period of prolonged inactivity.</span>
-                </li>
-                <li data-number="5">
-                    <span>Sellers must ensure product quality and handle customer complaints promptly.</span>
-                </li>
-                <li data-number="6">
-                    <span>Damaged or defective items must be replaced or refunded according to policy.</span>
-                </li>
-                <li data-number="7" class="important">
-                    <span>Any scam, fraud, or illegal activity will result in immediate legal action.</span>
-                </li>
-                <li data-number="8" class="important">
-                    <span>Selling illegal, restricted, or counterfeit items is strictly prohibited.</span>
-                </li>
+    <p>Welcome to Dealzhub, Kerala's own online chantha (marketplace) app operated by [Your Company Name], located in
+        Thiruvananthapuram, Kerala, India ("we," "us," or "our"). This document combines our Terms and Conditions
+        ("Terms") and Privacy Policy ("Policy") to govern your use of the Dealzhub mobile application (the "App") and
+        any related services (collectively, the "Services"). By downloading, installing, or using the App, you agree to
+        be bound by these Terms and our Policy. If you do not agree, please do not use the App.</p>
+
+    <p>We may update these Terms and Policy from time to time. We will notify you of material changes via in-app
+        notifications or email. Your continued use of the App after such changes constitutes acceptance.</p>
+
+    <h4>1. Introduction and Eligibility</h4>
+    <p>Dealzhub is a platform that allows users in Kerala to set up online stores, buy and sell local products, and
+        connect directly with nearby vendors and customers. It is intended for users aged 18 or older. If you are under
+        18, you must have parental or guardian consent to use the App. By using the App, you represent that you meet
+        these eligibility requirements.</p>
+    <p>The App is available on the Google Play Store and Apple App Store. It facilitates direct vendor-to-customer
+        transactions, eliminating middlemen, with features like QR code sharing for stores, district-specific
+        interfaces, dropshipping, and more.</p>
+
+    <h4>2. User Accounts and Registration</h4>
+    <p>To use certain features, such as setting up a store or making purchases, you must create an account. You agree to
+        provide accurate, current, and complete information during registration and to update it as needed.</p>
+    <ul>
+        <li><strong>Third-Party Login Services</strong>: We use third-party login services (e.g., Google, Facebook) for
+            authentication. These services may collect additional data as per their policies. However, Dealzhub does not
+            offer an equivalent login option that strictly limits data collection to only your name and email address,
+            allows you to keep your email address private from all parties during account setup, or guarantees no
+            collection of app interactions for advertising without explicit consent. If you prefer such privacy
+            features, you may choose not to use third-party logins and register directly via email if available. We
+            recommend reviewing the third-party providers' privacy policies.</li>
+        <li><strong>Account Security</strong>: You are responsible for maintaining the confidentiality of your account
+            credentials. Notify us immediately of any unauthorized access.</li>
+        <li><strong>Membership Cancellation Due to Inactivity</strong>: If your account remains inactive (no logins or
+            transactions) for a period of 6 months, we may cancel your membership and delete associated data. You will
+            receive a warning email 30 days prior.</li>
+    </ul>
+
+    <h4>3. App Features and Usage</h4>
+    <ul>
+        <li><strong>Setting Up a Store</strong>: Any resident of Kerala can create a shop in minutes. Download your
+            unique QR code to share your store via print, digital sharing, or in-person scanning.</li>
+        <li><strong>Buying and Selling</strong>: Users can sell or buy any legal products, including local goods like
+            spices, handicrafts, and services. All transactions are direct between vendors and customers—no middlemen.
+            Vendors handle transport options (e.g., self-pickup, local delivery, or couriers) at their discretion.</li>
+        <li><strong>Stock Updates</strong>: Vendors must update stock availability daily to ensure accurate listings.
+            Failure to do so may result in temporary suspension.</li>
+        <li><strong>Dropshipping</strong>: Vendors can use dropshipping by sourcing from other Kerala-based vendors
+            without holding inventory.</li>
+        <li><strong>District-Specific Interface</strong>: The App's interface is tailored by district, prioritizing
+            nearby shops and deals for a localized experience.</li>
+        <li><strong>Prohibited Activities</strong>: The selling of illegal products (e.g., controlled substances,
+            counterfeit goods, weapons) is strictly prohibited. Any scams, fraudulent listings, or deceptive practices
+            will be monitored and may result in immediate account termination and legal action, including reporting to
+            authorities.</li>
+        <li><strong>Customer Behavior and Complaints</strong>:
+            <ul>
+                <li><em>Dealing with Customers</em>: Users must interact respectfully. Harassment, abusive language, or
+                    discriminatory behavior may lead to bans.</li>
+                <li><em>Number of Complaints Leading to Ban</em>: Accounts receiving 3 or more verified complaints
+                    within a 30-day period (e.g., for poor behavior, scams, or quality issues) may be temporarily or
+                    permanently banned.</li>
+                <li><em>Quality Complaints and Damaged Products</em>: Buyers can file complaints for substandard or
+                    damaged products. Vendors must respond within 48 hours. Unresolved issues may lead to refunds
+                    (facilitated by the App if needed) or account penalties. We encourage evidence submission (e.g.,
+                    photos) for fair resolution.</li>
             </ul>
-        </div>
+        </li>
+    </ul>
 
-        <div class="footer">
-            <p><strong>Last Updated:</strong> October 2025</p>
-            <p>By using this platform, you acknowledge that you have read and understood these terms.</p>
-        </div>
-    </div>
+    <h4>4. Permissions and Device Access</h4>
+    <p>To provide full functionality, the App requires certain permissions on your device. By using the App, you consent
+        to these:</p>
+    <ul>
+        <li><strong>Storage and Photos</strong>: Access to read/write storage and photo library to upload product
+            images, store QR codes, or save receipts.</li>
+        <li><strong>Camera</strong>: Access to take photos for product listings, profile pictures, or verifying
+            deliveries.</li>
+        <li><strong>Location</strong>: Access to determine your district for tailored interfaces and nearby vendor
+            suggestions (coarse location only; we do not track precise movements without consent).</li>
+        <li><strong>Payments and Money</strong>: Access to integrate with third-party payment gateways (e.g., UPI,
+            Razorpay) for transactions. We do not store your full financial details; all payments are processed securely
+            by providers.</li>
+        <li><strong>Notifications</strong>: To send updates on orders, stock, or promotions.</li>
+        <li><strong>Contacts (Optional)</strong>: If enabled, to share QR codes or invite friends.</li>
+    </ul>
+    <p>These permissions are used solely for App functionality and are not shared without your consent. You can manage
+        them in your device settings.</p>
+
+    <h4>5. Privacy Policy: Information We Collect</h4>
+    <p>We are committed to protecting your privacy. This section outlines how we collect, use, and protect your data.
+    </p>
+    <ul>
+        <li><strong>Personal Information</strong>: When you register, we collect your name, email, phone number, address
+            (for district tailoring), and profile details. For vendors, we may collect business information like store
+            name and product details.</li>
+        <li><strong>Usage Data</strong>: We collect data on app interactions, such as browsing history, purchases, and
+            device info (e.g., IP address, OS version) to improve services.</li>
+        <li><strong>Payment Data</strong>: Processed by third-party gateways; we only store transaction IDs.</li>
+        <li><strong>Location Data</strong>: As noted above, for personalization.</li>
+        <li><strong>Photos and Media</strong>: Uploaded content for listings.</li>
+        <li><strong>Automatically Collected Data</strong>: Cookies, logs, and analytics from tools like Google
+            Analytics.</li>
+    </ul>
+    <p>We do not collect sensitive data (e.g., health, religion) unless voluntarily provided.</p>
+
+    <h4>6. How We Use Your Information</h4>
+    <ul>
+        <li>To provide Services: Manage accounts, facilitate transactions, update stock, and resolve complaints.</li>
+        <li>Personalization: District-specific recommendations and notifications.</li>
+        <li>Security: Detect scams, fraud, or prohibited activities.</li>
+        <li>Marketing: With consent, send promotions. We do not use app interactions for third-party advertising without
+            explicit opt-in.</li>
+        <li>Legal Compliance: To enforce Terms, respond to authorities, or protect rights.</li>
+    </ul>
+
+    <h4>7. Sharing Your Information</h4>
+    <ul>
+        <li><strong>With Other Users</strong>: Vendor details (e.g., store name, location) are shared with buyers for
+            transactions.</li>
+        <li><strong>Third Parties</strong>: Payment processors, analytics providers, or login services. We ensure they
+            comply with privacy laws.</li>
+        <li><strong>Legal Requirements</strong>: If required by law, subpoena, or to prevent harm.</li>
+        <li><strong>Business Transfers</strong>: In case of merger or sale, your data may be transferred.</li>
+    </ul>
+    <p>We do not sell your data to advertisers.</p>
+
+    <h4>8. Data Security and Retention</h4>
+    <p>We use industry-standard measures (e.g., encryption, firewalls) to protect data. However, no system is
+        infallible; you use the App at your own risk.</p>
+    <p>Data is retained as needed for Services or legal reasons. Inactive accounts' data may be deleted after 6 months.
+    </p>
+
+    <h4>9. Your Rights</h4>
+    <ul>
+        <li>Access, correct, or delete your data via app settings or by contacting us at [support@dealzhub.app].</li>
+        <li>Opt-out of marketing emails.</li>
+        <li>For EU/UK users: Rights under GDPR (e.g., portability).</li>
+        <li>California users: Rights under CCPA (e.g., opt-out of sales—we don't sell data).</li>
+    </ul>
+
+    <h4>10. Intellectual Property</h4>
+    <p>All App content (e.g., logos, code) is owned by us or licensors. You grant us a license to use uploaded content
+        (e.g., product photos) for App operations.</p>
+
+    <h4>11. Termination and Bans</h4>
+    <p>We may terminate accounts for violations, including excessive complaints, scams, or inactivity. Upon termination,
+        access ends, but obligations (e.g., unresolved disputes) survive.</p>
+
+    <h4>12. Disclaimer and Limitation of Liability</h4>
+    <p>The App is provided "as is." We disclaim warranties. We are not liable for indirect damages, lost profits, or
+        third-party actions (e.g., vendor scams). Liability is limited to INR 1,000 or fees paid in the last 12 months.
+    </p>
+    <p>For damaged products or quality issues, disputes are between users; we facilitate but are not responsible.</p>
+
+    <h4>13. Governing Law and Dispute Resolution</h4>
+    <p>Governed by Indian laws, with exclusive jurisdiction in the courts of Thiruvananthapuram, Kerala. Disputes may be
+        resolved via arbitration in Thiruvananthapuram, India, in accordance with the Arbitration and Conciliation Act,
+        1996.</p>
+
+    <h4>14. Additional Terms</h4>
+    <ul>
+        <li><strong>Force Majeure</strong>: Not liable for events beyond control (e.g., natural disasters).</li>
+        <li><strong>Severability</strong>: Invalid provisions don't affect others.</li>
+        <li><strong>Contact</strong>: For questions, email [support@dealzhub.app].</li>
+    </ul>
+
+    <p>By using Dealzhub, you acknowledge reading and agreeing to these Terms and Policy. Thank you for supporting local
+        Kerala businesses!</p>
 </body>
+
 </html>
