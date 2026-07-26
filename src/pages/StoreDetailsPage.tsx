@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { collection, onSnapshot, doc, updateDoc, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, doc, updateDoc, query, where, getDocs, writeBatch, deleteDoc } from 'firebase/firestore';
 import { database } from '../firebase';
-import { Loader2, Package, DollarSign, Box, Search } from 'lucide-react';
+import { Loader2, Package, DollarSign, Box, Search, Trash2 } from 'lucide-react';
 import type { Store, Product } from '../interfaces';
 
 interface StoreDetailsPageProps {
@@ -16,6 +16,8 @@ export const StoreDetailsPage = ({ store }: StoreDetailsPageProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Update vendorStatus when store changes
   useEffect(() => {
@@ -103,6 +105,48 @@ export const StoreDetailsPage = ({ store }: StoreDetailsPageProps) => {
     }
   };
 
+  const handleDeleteStore = async () => {
+    if (!store) return;
+    setIsDeleting(true);
+    
+    try {
+      // 1. Get all products for this store
+      const productsRef = collection(database, 'products');
+      const q = query(productsRef, where('storeId', '==', store.id));
+      const querySnapshot = await getDocs(q);
+      
+      let batch = writeBatch(database);
+      let count = 0;
+      
+      // 2. Delete all products in chunks
+      for (const docSnap of querySnapshot.docs) {
+        batch.delete(docSnap.ref);
+        count++;
+        if (count === 490) {
+          await batch.commit();
+          batch = writeBatch(database);
+          count = 0;
+        }
+      }
+      
+      // 3. Delete the store
+      const storeRef = doc(database, 'stores', store.id);
+      batch.delete(storeRef);
+      
+      await batch.commit();
+      alert('Store and its products deleted successfully!');
+      // After deletion, the store will be null/undefined on the previous level, 
+      // or the user can navigate away using the sidebar.
+      setShowDeletePopup(false);
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting store:', error);
+      alert('Failed to delete store and products.');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   // Helper function for status colors
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -166,6 +210,14 @@ export const StoreDetailsPage = ({ store }: StoreDetailsPageProps) => {
         </div>
 
         <div className="flex flex-col gap-2 items-end">
+          <button 
+            onClick={() => setShowDeletePopup(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-red-950/50 text-red-400 border border-red-900 rounded-lg hover:bg-red-900/50 transition-colors text-sm font-medium mb-2"
+          >
+            <Trash2 className="w-4 h-4" />
+            Delete Store
+          </button>
+          
           <label className="text-sm text-zinc-500 font-medium">Vendor Status</label>
           <div className="relative">
             <select
@@ -330,6 +382,43 @@ export const StoreDetailsPage = ({ store }: StoreDetailsPageProps) => {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Popup */}
+      {showDeletePopup && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+            <div className="flex items-center gap-3 mb-4 text-red-400">
+              <Trash2 className="w-6 h-6" />
+              <h3 className="text-xl font-bold">Delete Store?</h3>
+            </div>
+            
+            <p className="text-zinc-300 mb-2">
+              Are you sure you want to permanently delete <span className="font-semibold text-white">"{store.storeName}"</span>?
+            </p>
+            <p className="text-zinc-500 text-sm mb-6">
+              This action cannot be undone. This will also permanently delete all products associated with this store.
+            </p>
+            
+            <div className="flex items-center justify-end gap-3">
+              <button 
+                onClick={() => setShowDeletePopup(false)}
+                disabled={isDeleting}
+                className="px-4 py-2 bg-zinc-800 text-zinc-300 border border-zinc-700 rounded-lg hover:bg-zinc-700 transition-colors font-medium text-sm disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleDeleteStore}
+                disabled={isDeleting}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white border border-red-500 rounded-lg hover:bg-red-500 transition-colors font-medium text-sm disabled:opacity-50"
+              >
+                {isDeleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                {isDeleting ? 'Deleting...' : 'Delete Permanently'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

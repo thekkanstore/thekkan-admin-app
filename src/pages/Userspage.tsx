@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Loader2, Eye, Copy, Search, Download } from 'lucide-react';
+import { Loader2, Eye, Copy, Search, Download, Trash2 } from 'lucide-react';
 import {
   collection,
-  onSnapshot
+  onSnapshot,
+  doc,
+  writeBatch,
+  query,
+  where,
+  getDocs
 } from 'firebase/firestore';
 import { database } from '../firebase';
 import { format } from 'date-fns';
@@ -23,6 +28,9 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
+
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Fetch users from Firestore
   useEffect(() => {
@@ -129,6 +137,62 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
     URL.revokeObjectURL(url);
   };
 
+  const handleDeleteUser = async () => {
+    if (!userToDelete) return;
+    setIsDeleting(true);
+    
+    try {
+      let batch = writeBatch(database);
+      let count = 0;
+      
+      const userStore = getUserStore(userToDelete.id);
+      
+      // If user has a store, delete store and its products
+      if (userStore) {
+        // Delete all products for this store
+        const productsRef = collection(database, 'products');
+        const q = query(productsRef, where('storeId', '==', userStore.id));
+        const querySnapshot = await getDocs(q);
+        
+        for (const docSnap of querySnapshot.docs) {
+          batch.delete(docSnap.ref);
+          count++;
+          if (count === 490) {
+            await batch.commit();
+            batch = writeBatch(database);
+            count = 0;
+          }
+        }
+        
+        // Delete store
+        const storeRef = doc(database, 'stores', userStore.id);
+        batch.delete(storeRef);
+        count++;
+        if (count === 490) {
+          await batch.commit();
+          batch = writeBatch(database);
+          count = 0;
+        }
+      }
+      
+      // Delete the user from Firestore
+      const userRef = doc(database, 'users', userToDelete.id);
+      batch.delete(userRef);
+      
+      await batch.commit();
+      
+      // We cannot easily delete the Firebase Auth user from the client side without Admin SDK,
+      // but deleting from Firestore fulfills "deleted from firestore permanantly".
+      alert('User, store, and products deleted successfully from Firestore.');
+      setUserToDelete(null);
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      alert('Failed to delete user.');
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
@@ -171,6 +235,7 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
               <th className="text-left px-6 py-4 text-zinc-400 font-medium text-sm">Store</th>
               <th className="text-left px-6 py-4 text-zinc-400 font-medium text-sm">UserId</th>
               <th className="text-left px-6 py-4 text-zinc-400 font-medium text-sm">Created At</th>
+              <th className="text-center px-6 py-4 text-zinc-400 font-medium text-sm">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -236,6 +301,17 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
                     <td className="px-6 py-4 text-zinc-400">
                       {format(user.createdAt, "dd-MM-yyyy HH:mm")}
                     </td>
+                    <td className="px-6 py-4">
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => setUserToDelete(user)}
+                          className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-950/30 rounded-lg transition-colors"
+                          title="Delete User"
+                        >
+                          <Trash2 className="w-5 h-5" />
+                        </button>
+                      </div>
+                    </td>
                   </tr>
                 );
               })
@@ -243,6 +319,43 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
           </tbody>
         </table>
       </div>
+
+      {/* Delete User Confirmation Popup */}
+      {userToDelete && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+            <div className="flex items-center gap-3 mb-4 text-red-400">
+              <Trash2 className="w-6 h-6" />
+              <h3 className="text-xl font-bold">Delete User?</h3>
+            </div>
+            
+            <p className="text-zinc-300 mb-2">
+              Are you sure you want to permanently delete <span className="font-semibold text-white">"{userToDelete.name || userToDelete.email || 'this user'}"</span>?
+            </p>
+            <p className="text-zinc-500 text-sm mb-6">
+              This action cannot be undone. It will permanently delete this user's profile from Firestore, along with their store and all of their products if they exist.
+            </p>
+            
+            <div className="flex items-center justify-end gap-3">
+              <button 
+                onClick={() => setUserToDelete(null)}
+                disabled={isDeleting}
+                className="px-4 py-2 bg-zinc-800 text-zinc-300 border border-zinc-700 rounded-lg hover:bg-zinc-700 transition-colors font-medium text-sm disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={handleDeleteUser}
+                disabled={isDeleting}
+                className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white border border-red-500 rounded-lg hover:bg-red-500 transition-colors font-medium text-sm disabled:opacity-50"
+              >
+                {isDeleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
+                {isDeleting ? 'Deleting...' : 'Delete User'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
