@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { collection, onSnapshot, doc, updateDoc, query, where, getDocs, writeBatch, deleteDoc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, updateDoc, query, where, getDocs, writeBatch } from 'firebase/firestore';
 import { database } from '../firebase';
 import { Loader2, Package, DollarSign, Box, Search, Trash2 } from 'lucide-react';
 import type { Store, Product } from '../interfaces';
