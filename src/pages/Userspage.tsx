@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Loader2, Eye, Copy, Search } from 'lucide-react';
 import {
   collection,
-  onSnapshot,
-  Timestamp
+  onSnapshot
 } from 'firebase/firestore';
 import { database } from '../firebase';
 import { format } from 'date-fns';
