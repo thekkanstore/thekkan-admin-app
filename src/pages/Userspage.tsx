@@ -36,7 +36,7 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
         usersArray.push({
           id: doc.id,
           ...userData,
-          createdAt: userData.createdAt ? (userData.createdAt as Timestamp).toDate() : new Date(),
+          createdAt: userData.createdAt?.toDate ? userData.createdAt.toDate() : new Date(userData.createdAt || Date.now()),
         } as User);
       });
       
@@ -76,9 +76,9 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = users.filter(user =>
-      user.name.toLowerCase().includes(lowercasedQuery) ||
-      user.email.toLowerCase().includes(lowercasedQuery) ||
-      (user.phoneNumber && user.phoneNumber.toLowerCase().includes(lowercasedQuery))
+      (user.name?.toLowerCase() || '').includes(lowercasedQuery) ||
+      (user.email?.toLowerCase() || '').includes(lowercasedQuery) ||
+      (user.phoneNumber?.toLowerCase() || '').includes(lowercasedQuery)
     );
     
     // Keep the sorted order (newest first) after filtering
@@ -154,8 +154,8 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
 
                 return (
                   <tr key={user.id} className={index !== filteredUsers.length - 1 ? 'border-b border-zinc-800' : ''}>
-                    <td className="px-6 py-4 text-white font-medium">{user.name}</td>
-                    <td className="px-6 py-4 text-zinc-400">{user.email}</td>
+                    <td className="px-6 py-4 text-white font-medium">{user.name || 'N/A'}</td>
+                    <td className="px-6 py-4 text-zinc-400">{user.email || 'N/A'}</td>
                     <td className="px-6 py-4">
                       <span className="px-3 py-1 text-zinc-300 rounded-full text-sm mr-2">
                         {user.phoneNumber || 'N/A'}
