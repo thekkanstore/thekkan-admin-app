@@ -110,6 +110,10 @@ export const StoreDetailsPage = ({ store }: StoreDetailsPageProps) => {
         return 'bg-green-950/50 text-green-400 border-green-900';
       case 'rejected':
         return 'bg-red-950/50 text-red-400 border-red-900';
+      case 'inactive':
+        return 'bg-gray-950/50 text-gray-400 border-gray-900';
+      case 'private':
+        return 'bg-purple-950/50 text-purple-400 border-purple-900';
       case 'pending':
       default:
         return 'bg-yellow-950/50 text-yellow-400 border-yellow-900';
@@ -173,6 +177,8 @@ export const StoreDetailsPage = ({ store }: StoreDetailsPageProps) => {
               <option value="pending">Pending</option>
               <option value="approved">Approved</option>
               <option value="rejected">Rejected</option>
+              <option value="inactive">Inactive</option>
+              <option value="private">Private</option>
             </select>
 
             {statusLoading ? (
