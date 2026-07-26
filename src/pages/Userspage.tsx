@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Loader2, Eye, Copy, Search } from 'lucide-react';
+import { Loader2, Eye, Copy, Search, Download } from 'lucide-react';
 import {
   collection,
   onSnapshot
@@ -97,7 +97,37 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
     }
   };
 
-  
+  // Export users to CSV (Excel compatible)
+  const handleExportCSV = () => {
+    const headers = ['Name', 'Email', 'Phone Number', 'Role', 'Store ID', 'User ID', 'Created At'];
+    
+    const csvRows = filteredUsers.map(user => {
+      const userStore = getUserStore(user.id);
+      const roleStr = Array.isArray(user.role) ? user.role.join(', ') : (user.role || 'N/A');
+      
+      return [
+        `"${(user.name || 'N/A').replace(/"/g, '""')}"`,
+        `"${(user.email || 'N/A').replace(/"/g, '""')}"`,
+        `"${(user.phoneNumber || 'N/A').replace(/"/g, '""')}"`,
+        `"${String(roleStr).replace(/"/g, '""')}"`,
+        `"${userStore ? userStore.id : 'N/A'}"`,
+        `"${user.id}"`,
+        `"${format(user.createdAt, "dd-MM-yyyy HH:mm")}"`
+      ].join(',');
+    });
+    
+    const csvContent = [headers.join(','), ...csvRows].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `users_export_${format(new Date(), "yyyyMMdd_HHmmss")}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   if (loading) {
     return (
@@ -121,8 +151,11 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
               className="bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-1.5 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           )}
-          <button onClick={() => setIsSearchVisible(!isSearchVisible)} className="text-zinc-400 hover:text-white p-2 rounded-lg hover:bg-zinc-800">
+          <button onClick={() => setIsSearchVisible(!isSearchVisible)} className="text-zinc-400 hover:text-white p-2 rounded-lg hover:bg-zinc-800" title="Search">
             <Search className="w-5 h-5" />
+          </button>
+          <button onClick={handleExportCSV} className="text-zinc-400 hover:text-white p-2 rounded-lg hover:bg-zinc-800" title="Export as CSV">
+            <Download className="w-5 h-5" />
           </button>
         </div>
       </div>
