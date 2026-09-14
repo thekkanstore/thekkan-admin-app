@@ -5,6 +5,7 @@ import { Login } from './components/Login';
 import { Navbar } from './components/Navbar';
 import { Sidebar } from './components/Sidebar';
 import { UsersPage } from './pages/Userspage';
+import { StoresPage } from './pages/StoresPage';
 import { CategoriesPage } from './pages/CategoriesPage';
 import { StoreDetailsPage } from './pages/StoreDetailsPage';
 import { DashboardPage } from './pages/DashboardPage';
@@ -53,6 +54,8 @@ function App() {
     switch (currentPage) {
       case 'dashboard':
         return <DashboardPage />;
+      case 'stores':
+        return <StoresPage onViewStore={handleViewStore} />;
       case 'users':
         return <UsersPage onViewStore={handleViewStore} />;
       case 'categories':

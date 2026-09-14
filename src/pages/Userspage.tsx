@@ -92,14 +92,23 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
     setFilteredUsers(filtered);
   }, [searchQuery, users]);
 
-  // Get store for a specific user
-  const getUserStore = (userId: string): Store | undefined => {
-    return stores.find(store => store.userId === userId);
+  // Get store for a specific user (by User object or string ID)
+  const getUserStore = (userOrId: User | string): Store | undefined => {
+    if (typeof userOrId === 'string') {
+      return stores.find((store) => store.userId === userOrId || store.id === userOrId);
+    }
+    return stores.find((store) => {
+      const matchUserId = store.userId && (store.userId === userOrId.id);
+      const matchEmail = store.email && userOrId.email && (store.email.trim().toLowerCase() === userOrId.email.trim().toLowerCase());
+      const matchStoreId = userOrId.storeId && (store.id === userOrId.storeId);
+      const matchPhone = store.phoneNumber && userOrId.phoneNumber && (String(store.phoneNumber).trim() === String(userOrId.phoneNumber).trim());
+      return matchUserId || matchEmail || matchStoreId || matchPhone;
+    });
   };
 
   // Handle view store button click
-  const handleViewStore = (userId: string) => {
-    const store = getUserStore(userId);
+  const handleViewStore = (user: User | string) => {
+    const store = getUserStore(user);
     if (store) {
       onViewStore(store);
     }
@@ -110,7 +119,7 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
     const headers = ['Name', 'Email', 'Phone Number', 'Role', 'Store ID', 'User ID', 'Created At'];
     
     const csvRows = filteredUsers.map(user => {
-      const userStore = getUserStore(user.id);
+      const userStore = getUserStore(user);
       const roleStr = Array.isArray(user.role) ? user.role.join(', ') : (user.role || 'N/A');
       
       return [
@@ -145,7 +154,7 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
       let batch = writeBatch(database);
       let count = 0;
       
-      const userStore = getUserStore(userToDelete.id);
+      const userStore = getUserStore(userToDelete);
       
       // If user has a store, delete store and its products
       if (userStore) {
@@ -247,7 +256,7 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
               </tr>
             ) : (
               filteredUsers.map((user, index) => {
-                const userStore = getUserStore(user.id);
+                const userStore = getUserStore(user);
 
                 return (
                   <tr key={user.id} className={index !== filteredUsers.length - 1 ? 'border-b border-zinc-800' : ''}>
@@ -271,11 +280,11 @@ export const UsersPage = ({ onViewStore }: UsersPageProps) => {
                     <td className="px-6 py-4">
                       {userStore ? (
                         <button
-                          onClick={() => handleViewStore(user.id)}
-                          className="flex items-center gap-1 px-3 py-1.5 rounded-lg font-medium text-sm transition-colors bg-blue-950/50 text-blue-400 border border-blue-900 hover:bg-blue-900/50"
+                          onClick={() => handleViewStore(user)}
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-medium text-sm transition-colors bg-blue-950/50 text-blue-400 border border-blue-900 hover:bg-blue-900/50"
                         >
                           <Eye className="w-4 h-4" />
-                          View Store
+                          <span>{userStore.storeName || 'View Store'}</span>
                         </button>
                       ) : (
                         <span className="text-zinc-500 text-sm">No store</span>

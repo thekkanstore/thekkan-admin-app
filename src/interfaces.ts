@@ -9,9 +9,15 @@ export interface Store {
   categories?: string[];
   city: string;
   state: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: any;
+  updatedAt: any;
   vendorStatus?: string;
+  paymentStatus?: string;
+  paymentOrderId?: string;
+  subscriptionPlan?: string;
+  subscriptionAmount?: number;
+  subscriptionStartDate?: any;
+  subscriptionEndDate?: any;
 }
 
 export interface Product {

@@ -1,4 +1,4 @@
-import { Home, FolderOpen, LayoutDashboard } from 'lucide-react';
+import { Home, FolderOpen, LayoutDashboard, Store as StoreIcon } from 'lucide-react';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -10,6 +10,7 @@ interface SidebarProps {
 export const Sidebar = ({ isOpen, currentPage, onPageChange, onClose }: SidebarProps) => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'stores', label: 'Stores', icon: StoreIcon },
     { id: 'users', label: 'Users', icon: Home },
     { id: 'categories', label: 'Categories', icon: FolderOpen },
   ];
