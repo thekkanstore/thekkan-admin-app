@@ -129,6 +129,33 @@ export const StoresPage = ({ onViewStore }: StoresPageProps) => {
     }
   };
 
+  const handlePaymentStatusChange = async (store: Store, newPaymentStatus: string) => {
+    setStatusLoadingMap((prev) => ({ ...prev, [store.id]: true }));
+
+    try {
+      const storeRef = doc(database, 'stores', store.id);
+      const updateData: any = {
+        paymentStatus: newPaymentStatus,
+        updatedAt: new Date(),
+      };
+
+      if (newPaymentStatus.toUpperCase() === 'PAID' && !store.subscriptionEndDate) {
+        const startDate = new Date();
+        const endDate = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000);
+        updateData.subscriptionStartDate = startDate;
+        updateData.subscriptionEndDate = endDate;
+        updateData.vendorStatus = 'approved';
+      }
+
+      await updateDoc(storeRef, updateData);
+    } catch (error) {
+      console.error('Error updating payment status:', error);
+      alert('Failed to update payment status.');
+    } finally {
+      setStatusLoadingMap((prev) => ({ ...prev, [store.id]: false }));
+    }
+  };
+
   const handleDeleteStore = async () => {
     if (!storeToDelete) return;
     setIsDeleting(true);
@@ -230,23 +257,6 @@ export const StoresPage = ({ onViewStore }: StoresPageProps) => {
       default:
         return 'bg-amber-950/60 text-amber-400 border-amber-800';
     }
-  };
-
-  const getPaymentBadge = (status?: string) => {
-    if (status?.toUpperCase() === 'PAID') {
-      return (
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-950/60 text-emerald-400 border border-emerald-800">
-          <CheckCircle2 className="w-3.5 h-3.5" />
-          PAID
-        </span>
-      );
-    }
-    return (
-      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-950/60 text-amber-400 border border-amber-800">
-        <Clock className="w-3.5 h-3.5" />
-        {status || 'Pending'}
-      </span>
-    );
   };
 
   // Stats calculation
@@ -437,9 +447,25 @@ export const StoresPage = ({ onViewStore }: StoresPageProps) => {
                         <div className="text-xs text-zinc-400 mt-0.5">{store.phoneNumber || 'N/A'}</div>
                       </td>
 
-                      {/* Payment */}
+                      {/* Payment Status Dropdown */}
                       <td className="px-6 py-4">
-                        {getPaymentBadge(store.paymentStatus)}
+                        <div className="relative inline-block">
+                          <select
+                            value={store.paymentStatus?.toUpperCase() === 'PAID' ? 'PAID' : (store.paymentStatus || 'pending')}
+                            onChange={(e) => handlePaymentStatusChange(store, e.target.value)}
+                            disabled={isStatusUpdating}
+                            className={`appearance-none px-2.5 py-1 pr-7 rounded-lg border text-xs font-semibold uppercase tracking-wider cursor-pointer disabled:opacity-50 transition-colors ${
+                              store.paymentStatus?.toUpperCase() === 'PAID'
+                                ? 'bg-emerald-950/60 text-emerald-400 border-emerald-800'
+                                : 'bg-amber-950/60 text-amber-400 border-amber-800'
+                            }`}
+                          >
+                            <option value="PAID">PAID</option>
+                            <option value="pending">Pending</option>
+                            <option value="failed">Failed</option>
+                            <option value="refunded">Refunded</option>
+                          </select>
+                        </div>
                       </td>
 
                       {/* Subscription Plan & Expiry */}
